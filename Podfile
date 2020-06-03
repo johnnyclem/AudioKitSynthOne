@@ -1,4 +1,4 @@
-platform :ios, '10.0'
+platform :ios, '13.0'
 use_frameworks!
 inhibit_all_warnings!
 
@@ -8,8 +8,8 @@ source 'https://github.com/CocoaPods/Specs.git'
 
 def available_pods
     pod 'AppCenter'
-    pod 'AudioKit', '= 4.9.2'
-    pod 'Disk', '~> 0.3.2'
+    pod 'AudioKit'#, '= 4.9.2'
+    pod 'Disk'#, '~> 0.3.2'
     pod 'Audiobus'
     pod 'OneSignal', '>= 2.6.2', '< 3.0'
 end
@@ -18,22 +18,13 @@ target 'AudioKitSynthOne' do
     available_pods
 end
 
-target 'OneSignalNotificationServiceExtension' do
-    pod 'OneSignal', '>= 2.6.2', '< 3.0'
-    pod 'AudioKit', '= 4.9.2'
-end
-
 
 # Override Swift version for out of date pods
 post_install do |installer|
   installer.pods_project.targets.each do |target|
       target.build_configurations.each do |config|
           config.build_settings['CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED'] = 'YES'
-      end
-      if ['Disk'].include? target.name
-          target.build_configurations.each do |config|
-              config.build_settings['SWIFT_VERSION'] = '4.0'
-          end
+          config.build_settings['SWIFT_VERSION'] = '5.2.4'
       end
   end
 end
